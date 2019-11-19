@@ -29,7 +29,9 @@ int main(int argc, char * argv[]) {
   struct stat file;
   for ( ; direntry != NULL; direntry = readdir(dir)) {
     stat(direntry->d_name, &file);
-    dir_size += file.st_size;
+    if (direntry->d_type == 8) {
+      dir_size += file.st_size;
+    }
     printf("%s %ldB %s\n", strtype(direntry->d_type), file.st_size, direntry->d_name);
   }
   printf("Total dir size: %dB\n", dir_size);
